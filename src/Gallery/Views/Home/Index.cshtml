@@ -1,0 +1,26 @@
+﻿@using Gallery
+@model Gallery.Models.Home.HomeViewModel
+@inject Configuration Configuration
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h1 class="text-center hero-title">Artworks by Julian Scrivener</h1>
+
+<ul>
+    @foreach (var picture in Model.Pictures)
+    {
+        <div class="artwork">
+            <div class="artwork-inner">
+                <img
+                    src="@Configuration.ImageRequestPath/@picture.Url"
+                    alt="@picture.Name"
+                    loading="lazy"
+                    class="gallery-image">
+                <p class="hr gallery-info">@picture.Name | @picture.Year</p>
+            </div>
+        </div>
+    }
+</ul>
+
