@@ -1,0 +1,48 @@
+name: Gallery
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    env:
+      DOCKERHUB_USERNAME: ${{ vars.DOCKERHUB_USERNAME }}
+      DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+    
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        
+      - name: Setup Docker
+        uses: docker/setup-docker-action@v4
+        with:
+          daemon-config: |
+            {
+              "features": {
+                "containerd-snapshotter": true
+              }
+            }
+            
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        
+      - name: Restore dependencies
+        run: dotnet restore src/Gallery.sln
+        
+      - name: Build
+        run: dotnet build src/Gallery.sln --no-restore
+        
+      - name: Publish
+        run: dotnet publish src/Gallery.sln -p:ContainerRepository="${DOCKERHUB_USERNAME}/gallery" -t:PublishContainer
+          
+      - name: Login To Docker Hub
+        run: |
+          echo "$DOCKERHUB_PASSWORD" >> dockerhub.password
+          cat dockerhub.password | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+          
+      - name: Push To Docker Hub
+        run: docker push "${DOCKERHUB_USERNAME}/gallery" -a

@@ -1,0 +1,106 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+/* Subtle scroll snap to enhance focus behavior */
+html, body {
+  scroll-behavior: smooth;
+}
+
+ul {
+  scroll-snap-type: y proximity; /* allow natural scroll with gentle snap */
+}
+
+.gallery-image {
+  scroll-snap-align: center; /* align image center to viewport center */
+}
+
+/* Site-wide font */
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  background-color: #f8f8f8;
+  margin-bottom: 60px;
+}
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+  color: var(--bs-secondary-color);
+  text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+  text-align: start;
+}
+
+.gallery-image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  will-change: transform;
+  transform-origin: center center;
+  transition: transform 120ms ease-out;
+}
+
+/* Prominent hero title without underline */
+.hero-title {
+  min-height: 100vh;           /* occupy 90 the viewport height */
+  display: flex;              /* center the text within the block */
+  align-items: center;
+  justify-content: center;
+  font-weight: 300;
+  letter-spacing: 0.6px;
+  color: #222;
+  margin: 0 0 16px 0;         /* keep small space before the gallery */
+}
+
+.hero-title::after {
+  display: none;              /* remove decorative underline */
+}
+
+@media (min-width: 768px) {
+  .hero-title {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .hero-title {
+    font-size: 2.25rem;
+  }
+}
+
+/* Container for image + caption */
+.artwork {
+  display: block;
+  max-width: 100%;
+  margin: 0 auto 24px auto;
+  text-align: center;
+  will-change: transform;
+  transform-origin: center center;
+  scroll-snap-align: center;
+}
+
+/* Inner wrapper to left-align caption with image */
+.artwork-inner {
+  display: inline-block;     /* shrink to image width */
+  text-align: left;          /* align caption to left edge of image */
+}
+
+.gallery-info {
+  margin-top: 6px;
+}
